@@ -42,9 +42,6 @@ vim.opt.smarttab = true
 -- Autocompletion
 vim.o.autocomplete = true
 
--- Make available hand written useful functions and methods
-require("util/util")
-
 -- Provides support for managing LSP and Treesitter
 vim.pack.add({
   { src = "https://github.com/mason-org/mason.nvim" },
@@ -86,3 +83,4 @@ vim.pack.add({
 
 vim.cmd('colorscheme nord')
 require('configs/legendary-keymaps')
+
