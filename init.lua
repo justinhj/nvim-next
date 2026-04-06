@@ -7,7 +7,6 @@
 -- and argue for hours over which is the best key for this
 -- Defines the leader key for custom shortcut mappings
 vim.g.mapleader = ","
-
 -- Prevents showing extra messages when using completion
 vim.opt.shortmess:append("c")
 -- Sets the height of the command line area at the bottom
@@ -16,7 +15,6 @@ vim.opt.cmdheight = 2
 vim.opt.number = true
 -- Displays line numbers relative to the current cursor position
 vim.opt.relativenumber = true
-
 -- Time in milliseconds to wait for a mapped sequence to complete
 vim.opt.timeoutlen = 500
 -- Time in milliseconds of inactivity before calling CursorHold or writing to swap
@@ -41,7 +39,50 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 -- Makes <Tab> insert 'shiftwidth' number of spaces at the start of a line
 vim.opt.smarttab = true
+-- Autocompletion
+vim.o.autocomplete = true
 
 -- Make available hand written useful functions and methods
 require("util/util")
 
+-- Provides support for managing LSP and Treesitter
+vim.pack.add({
+  { src = "https://github.com/mason-org/mason.nvim" },
+  { src = "https://github.com/mason-org/mason-lspconfig.nvim" },
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+})
+
+require("mason").setup()
+require("mason-lspconfig").setup({
+  -- TODO Add any that you want everywhere
+  ensure_installed = {
+    "lua_ls",
+    "pylsp",
+  },
+  automatic_enable = true,
+})
+
+-- Enable LSPs
+
+vim.lsp.enable('pylsp') -- Python
+vim.lsp.enable('clangd') -- C/C++
+
+-- Treesitter
+
+require("nvim-treesitter.config").setup({
+  ensure_installed = { "python", "lua", "vim", "vimdoc", "query" },
+  auto_install = true,
+  highlight = {
+    enable = true,
+  },
+})
+
+-- Quality of life plugins. Colorthemes, keymaps etc
+
+vim.pack.add({
+  { src = "https://github.com/shaunsingh/nord.nvim" },
+  { src = "https://github.com/mrjones2014/legendary.nvim" },
+})
+
+vim.cmd('colorscheme nord')
+require('configs/legendary-keymaps')
