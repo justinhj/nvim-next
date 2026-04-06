@@ -46,7 +46,7 @@ vim.o.autocomplete = true
 vim.pack.add({
   { src = "https://github.com/mason-org/mason.nvim" },
   { src = "https://github.com/mason-org/mason-lspconfig.nvim" },
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter", branch = 'main' },
 })
 
 require("mason").setup()
@@ -60,14 +60,17 @@ require("mason-lspconfig").setup({
 })
 
 -- Enable LSPs
+-- NOTE configs are in the lsp folder
 
 vim.lsp.enable('pylsp') -- Python
 vim.lsp.enable('clangd') -- C/C++
+vim.lsp.enable('zls') -- Zig
+vim.lsp.enable('rust_analyzer') -- Rust
 
 -- Treesitter
 
 require("nvim-treesitter.config").setup({
-  ensure_installed = { "python", "lua", "vim", "vimdoc", "query" },
+  ensure_installed = { "python",  },
   auto_install = true,
   highlight = {
     enable = true,
@@ -84,3 +87,67 @@ vim.pack.add({
 vim.cmd('colorscheme nord')
 require('configs/legendary-keymaps')
 
+-- New UI opt-in
+require('vim._core.ui2').enable({})
+
+-- Treat .dig files as yaml
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = '*.dig',
+  callback = function()
+    vim.bo.filetype = 'yaml'
+  end,
+})
+
+-- Selectively use colorizer
+vim.pack.add({
+ { src = 'https://github.com/NvChad/nvim-colorizer.lua' },
+})
+
+require 'colorizer'.setup {
+  'css',
+  'javascript',
+  html = {
+    mode = 'foreground',
+  }
+}
+
+-- fzf-lua
+-- File finding and search
+
+vim.pack.add({
+ { src = 'https://github.com/ibhagwan/fzf-lua' },
+})
+
+require('configs/fzf-lua')
+
+-- which-key
+
+vim.pack.add({
+ { src = 'https://github.com/folke/which-key.nvim' },
+})
+
+require("which-key").setup({ delay = 1000 })
+
+vim.pack.add({
+ { src = 'https://github.com/justinhj/battery.nvim' },
+ { src = 'https://github.com/nvim-lua/plenary.nvim' },
+})
+
+require("battery").setup({
+  update_rate_seconds = 60,
+  show_status_when_no_battery = false,
+  show_plugged_icon = true,
+  show_unplugged_icon = false,
+  show_percent = true,
+  vertical_icons = true,
+  multiple_battery_selection = 1,
+})
+
+-- status line
+
+vim.pack.add({
+ { src = 'https://github.com/nvim-lualine/lualine.nvim' },
+ { src = 'https://github.com/nvim-lualine/lualine.nvim' },
+})
+
+require('configs/lualine')

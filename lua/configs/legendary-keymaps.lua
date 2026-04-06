@@ -22,11 +22,11 @@ require("legendary").setup({
   commands = {
     -- easily create user commands
     {
-      ":SayHello",
+      ":LSPFormat",
       function()
-        print("hello world!")
+        vim.lsp.buf.format()
       end,
-      description = "Say hello as a command",
+      description = "Format the file using the lsp support",
     },
   },
 })
