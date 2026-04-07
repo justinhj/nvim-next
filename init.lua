@@ -87,6 +87,7 @@ vim.lsp.enable('pylsp') -- Python
 vim.lsp.enable('clangd') -- C/C++
 vim.lsp.enable('zls') -- Zig
 vim.lsp.enable('rust_analyzer') -- Rust
+vim.lsp.enable('lua_ls') -- Lua
 
 -- Treesitter
 
