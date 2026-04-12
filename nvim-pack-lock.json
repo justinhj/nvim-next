@@ -1,7 +1,7 @@
 {
   "plugins": {
     "battery.nvim": {
-      "rev": "6ba1f329e95c183dcda48a03bc5c711aaf509603",
+      "rev": "6b7ce9d070b3c76241b6105291f730e5b865019c",
       "src": "https://github.com/justinhj/battery.nvim",
       "version": "'remove-plenary'"
     },
