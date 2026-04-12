@@ -1,5 +1,5 @@
 -- Justin's amazing lua config
--- 0.12.0 required
+-- 0.12.x+ required
 
 -- Set up VIM global options
 
@@ -155,20 +155,15 @@ vim.pack.add({
  },
 })
 
-require("battery").setup({
-  update_rate_seconds = 60,
-  show_status_when_no_battery = false,
-  show_plugged_icon = true,
-  show_unplugged_icon = false,
-  show_percent = true,
-  vertical_icons = true,
-  multiple_battery_selection = 1,
-})
-
--- status line
+require('battery').setup(require('configs/battery'))
 
 vim.pack.add({
- { src = 'https://github.com/nvim-lualine/lualine.nvim' },
-})
+  {
+    src = 'https://github.com/nvim-mini/mini.nvim',
+    version = 'main',
+}})
 
-require('configs/lualine')
+require('mini.git').setup()
+require('mini.icons').setup()
+require('mini.diff').setup()
+require('configs/mini-statusline')
