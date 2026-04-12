@@ -26,7 +26,7 @@ vim.opt.smartcase = true
 -- Enables 24-bit RGB colors in the terminal
 vim.opt.termguicolors = true
 -- Configures the behavior of the insert mode completion menu
-vim.opt.completeopt = "menu,menuone,noselect"
+vim.opt.completeopt = "menu,menuone,noselect,popup"
 -- Number of spaces that a <Tab> character represents
 vim.opt.tabstop = 2
 -- Number of spaces to use for each step of automatic indentation
@@ -41,13 +41,12 @@ vim.opt.smartindent = true
 vim.opt.smarttab = true
 -- Autocompletion
 vim.o.autocomplete = true
-vim.opt.completeopt = "menu,menuone,noselect,popup"
 
 -- Provides support for managing LSP and Treesitter
 vim.pack.add({
   { src = "https://github.com/mason-org/mason.nvim" },
   { src = "https://github.com/mason-org/mason-lspconfig.nvim" },
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter", branch = 'main' },
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = 'main' },
 })
 
 require("mason").setup()
@@ -151,8 +150,9 @@ vim.pack.add({
 require("which-key").setup({ delay = 1000 })
 
 vim.pack.add({
- { src = 'https://github.com/justinhj/battery.nvim' },
- { src = 'https://github.com/nvim-lua/plenary.nvim' },
+ { src = 'https://github.com/justinhj/battery.nvim',
+   version = 'remove-plenary',
+ },
 })
 
 require("battery").setup({
@@ -168,7 +168,6 @@ require("battery").setup({
 -- status line
 
 vim.pack.add({
- { src = 'https://github.com/nvim-lualine/lualine.nvim' },
  { src = 'https://github.com/nvim-lualine/lualine.nvim' },
 })
 
