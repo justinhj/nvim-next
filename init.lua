@@ -204,3 +204,9 @@ end, { silent = true, nowait = false, desc = 'Pick grep_live' })
 map('n', '<Leader>lc', function()
   require('mini.pick').builtin.resume()
 end, { silent = true, nowait = false, desc = 'Pick resume' })
+
+-- Experimental: Leap
+vim.pack.add({ { src = 'https://codeberg.org/andyg/leap.nvim', version = 'main' } })
+
+vim.keymap.set({ 'n', 'x', 'o' }, 's', '<Plug>(leap)')
+vim.keymap.set('n', 'S', '<Plug>(leap-from-window)')

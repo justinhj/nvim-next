@@ -9,6 +9,11 @@
       "rev": "9f0432fdd7825ab163520045831a40b6df82ea28",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
+    "leap.nvim": {
+      "rev": "b960d5038c5c505c52e56a54490f9bbb1f0e6ef6",
+      "src": "https://codeberg.org/andyg/leap.nvim",
+      "version": "'main'"
+    },
     "legendary.nvim": {
       "rev": "6de819bc285eb8c420e49e82c21d5bb696b5a727",
       "src": "https://github.com/mrjones2014/legendary.nvim"
