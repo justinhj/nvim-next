@@ -75,23 +75,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client and client:supports_method("textDocument/completion") then
       -- Enable native LSP completion for this client + buffer
       vim.lsp.completion.enable(true, client_id, args.buf, {
-        autotrigger = true,   -- auto-show menu as you type (recommended)
+        autotrigger = true, -- auto-show menu as you type (recommended)
         -- You can also set { autotrigger = false } and trigger manually with <C-x><C-o>
       })
     end
   end,
 })
 
-vim.lsp.enable('pylsp') -- Python
-vim.lsp.enable('clangd') -- C/C++
-vim.lsp.enable('zls') -- Zig
+vim.lsp.enable('pylsp')         -- Python
+vim.lsp.enable('clangd')        -- C/C++
+vim.lsp.enable('zls')           -- Zig
 vim.lsp.enable('rust_analyzer') -- Rust
-vim.lsp.enable('lua_ls') -- Lua
+vim.lsp.enable('lua_ls')        -- Lua
 
 -- Treesitter
 
 require("nvim-treesitter.config").setup({
-  ensure_installed = { "python",  },
+  ensure_installed = { "python", },
   auto_install = true,
   highlight = {
     enable = true,
@@ -102,11 +102,9 @@ require("nvim-treesitter.config").setup({
 
 vim.pack.add({
   { src = "https://github.com/shaunsingh/nord.nvim" },
-  { src = "https://github.com/mrjones2014/legendary.nvim" },
 })
 
 vim.cmd('colorscheme nord')
-require('configs/legendary-keymaps')
 
 -- New UI opt-in
 require('vim._core.ui2').enable({})
@@ -121,7 +119,7 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
 
 -- Selectively use colorizer
 vim.pack.add({
- { src = 'https://github.com/NvChad/nvim-colorizer.lua' },
+  { src = 'https://github.com/NvChad/nvim-colorizer.lua' },
 })
 
 require 'colorizer'.setup {
@@ -132,27 +130,19 @@ require 'colorizer'.setup {
   }
 }
 
--- fzf-lua
--- File finding and search
-
-vim.pack.add({
- { src = 'https://github.com/ibhagwan/fzf-lua' },
-})
-
-require('configs/fzf-lua')
-
 -- which-key
 
 vim.pack.add({
- { src = 'https://github.com/folke/which-key.nvim' },
+  { src = 'https://github.com/folke/which-key.nvim' },
 })
 
 require("which-key").setup({ delay = 1000 })
 
 vim.pack.add({
- { src = 'https://github.com/justinhj/battery.nvim',
-   version = 'remove-plenary',
- },
+  {
+    src = 'https://github.com/justinhj/battery.nvim',
+    version = 'remove-plenary',
+  },
 })
 
 require('battery').setup(require('configs/battery'))
@@ -161,9 +151,56 @@ vim.pack.add({
   {
     src = 'https://github.com/nvim-mini/mini.nvim',
     version = 'main',
-}})
+  } })
 
 require('mini.git').setup()
 require('mini.icons').setup()
-require('mini.diff').setup()
+require('mini.pick').setup()
 require('configs/mini-statusline')
+
+-- Key remapping and autocommands
+
+local map = vim.keymap.set
+
+-- Lua evaluate current file
+map('n', '<leader><leader>l', ':luafile %<CR>', { desc = 'Lua evaluate current file' })
+
+-- Easier window movement
+map('n', '<C-h>', '<C-w>h', { desc = 'Go to left window' })
+map('n', '<C-j>', '<C-w>j', { desc = 'Go to bottom window' })
+map('n', '<C-k>', '<C-w>k', { desc = 'Go to top window' })
+map('n', '<C-l>', '<C-w>l', { desc = 'Go to right window' })
+
+local my_augroup = vim.api.nvim_create_augroup('CustomSettings', { clear = true })
+
+vim.api.nvim_create_autocmd('FileType', {
+  group = my_augroup,
+  pattern = '*', -- apply to all filetypes
+  callback = function()
+    -- This fixes annoying auto comments on newline
+    vim.opt_local.formatoptions:remove({ 'r', 'o' })
+  end,
+  desc = 'Disable auto-commenting on new lines'
+})
+
+-- User Commands
+vim.api.nvim_create_user_command('LSPFormat', function()
+  vim.lsp.buf.format()
+end, { desc = 'Format the file using the LSP support' })
+
+-- Mini Pick
+map('n', '<Leader>ff', function()
+  require('mini.pick').builtin.files({ tool = 'fd' })
+end, { silent = true, nowait = false, desc = 'Pick files' })
+
+map('n', '<Leader>lg', function()
+  require('mini.pick').builtin.grep({ tool = 'rg' })
+end, { silent = true, nowait = false, desc = 'Pick grep' })
+
+map('n', '<Leader>ll', function()
+  require('mini.pick').builtin.grep_live({ tool = 'rg' })
+end, { silent = true, nowait = false, desc = 'Pick grep_live' })
+
+map('n', '<Leader>lc', function()
+  require('mini.pick').builtin.resume()
+end, { silent = true, nowait = false, desc = 'Pick resume' })
