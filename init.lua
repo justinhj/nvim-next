@@ -87,15 +87,12 @@ vim.lsp.enable('clangd')        -- C/C++
 vim.lsp.enable('zls')           -- Zig
 vim.lsp.enable('rust_analyzer') -- Rust
 vim.lsp.enable('lua_ls')        -- Lua
+vim.lsp.enable('ts_ls')         -- Typescript
 
 -- Treesitter
 
 require("nvim-treesitter.config").setup({
-  ensure_installed = { "python", },
-  auto_install = true,
-  highlight = {
-    enable = true,
-  },
+  install_dir = vim.fn.stdpath('data') .. '/site',
 })
 
 -- Quality of life plugins. Colorthemes, keymaps etc
