@@ -127,14 +127,6 @@ require 'colorizer'.setup {
   }
 }
 
--- which-key
-
-vim.pack.add({
-  { src = 'https://github.com/folke/which-key.nvim' },
-})
-
-require("which-key").setup({ delay = 1000 })
-
 vim.pack.add({
   {
     src = 'https://github.com/justinhj/battery.nvim',
@@ -142,7 +134,7 @@ vim.pack.add({
   },
 })
 
-require('battery').setup(require('configs/battery'))
+require('configs/battery')
 
 vim.pack.add({
   {
@@ -153,6 +145,8 @@ vim.pack.add({
 require('mini.git').setup()
 require('mini.icons').setup()
 require('mini.pick').setup()
+
+require('configs/mini-clue')
 require('configs/mini-statusline')
 
 -- Key remapping and autocommands
