@@ -62,6 +62,13 @@ require("mason-lspconfig").setup({
 -- Enable LSPs
 -- NOTE configs are in the lsp folder
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+vim.lsp.config("*", {
+  capabilities = capabilities,
+})
+
 -- Enable LSP completion (this connects LSP to the native menu)
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp_completion", { clear = true }),
@@ -142,6 +149,7 @@ vim.pack.add({
     version = 'main',
   } })
 
+require('mini.files').setup()
 require('mini.git').setup()
 require('mini.icons').setup()
 require('mini.pick').setup()
@@ -152,6 +160,11 @@ require('configs/mini-statusline')
 -- Key remapping and autocommands
 
 local map = vim.keymap.set
+
+map('i', '<C-Space>', function() vim.lsp.completion.get() end, { desc = 'Trigger LSP completion' })
+
+-- MiniFiles
+map('n', '<leader>fe', function() MiniFiles.open() end, { desc = 'Open MiniFiles explorer' })
 
 -- Lua evaluate current file
 map('n', '<leader><leader>l', ':luafile %<CR>', { desc = 'Lua evaluate current file' })
