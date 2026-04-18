@@ -1,5 +1,10 @@
 {
   "plugins": {
+    "agentic.nvim": {
+      "rev": "b9461fd293565e8abd291289f8e5f5aee42aca64",
+      "src": "https://github.com/carlos-algms/agentic.nvim",
+      "version": "'main'"
+    },
     "battery.nvim": {
       "rev": "6b7ce9d070b3c76241b6105291f730e5b865019c",
       "src": "https://github.com/justinhj/battery.nvim",
