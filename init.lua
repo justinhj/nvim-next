@@ -1,4 +1,4 @@
--- Justin's amazing lua config
+-- Justin's simple lua config
 -- 0.12.x+ required
 
 -- Set up VIM global options
@@ -42,24 +42,32 @@ vim.opt.smarttab = true
 -- Autocompletion
 vim.o.autocomplete = true
 
--- Provides support for managing LSP and Treesitter
+-- New UI opt-in
+require('vim._core.ui2').enable({})
+
+-- Plugins for treesitter and lsp server management
 vim.pack.add({
   { src = "https://github.com/mason-org/mason.nvim" },
   { src = "https://github.com/mason-org/mason-lspconfig.nvim" },
   { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = 'main' },
 })
 
+-- Add each lsp server you want to enable here
+local lsp_servers = {
+  'pylsp',
+  'clangd',
+  'zls',
+  'rust_analyzer',
+  'lua_ls',
+  'ts_ls',
+}
+
 require("mason").setup()
 require("mason-lspconfig").setup({
-  -- TODO Add any that you want everywhere
-  ensure_installed = {
-    "lua_ls",
-    "pylsp",
-  },
-  automatic_enable = true,
+  ensure_installed = lsp_servers,
+  automatic_enable = false,
 })
 
--- Enable LSPs
 -- NOTE configs are in the lsp folder
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -89,12 +97,26 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-vim.lsp.enable('pylsp')         -- Python
-vim.lsp.enable('clangd')        -- C/C++
-vim.lsp.enable('zls')           -- Zig
-vim.lsp.enable('rust_analyzer') -- Rust
-vim.lsp.enable('lua_ls')        -- Lua
-vim.lsp.enable('ts_ls')         -- Typescript
+-- Verify a config file exists for an lsp server. This should be in the lsp folder.
+local function has_lsp_config(server_name)
+  local config_path = vim.fn.stdpath("config")
+  local target_path = vim.fs.joinpath(config_path, "lsp", server_name .. ".lua")
+  if vim.uv.fs_stat(target_path) then
+    return true
+  else
+    return false
+  end
+end
+
+vim.iter(lsp_servers):each(
+function(lsp_server)
+  if not has_lsp_config(lsp_server) then
+    vim.api.nvim_echo({ { 'Warning. lsp server ' .. lsp_server .. ' has no config file in the config lsp folder.' , 'WarningMsg' } }, true, {})
+    else
+      vim.lsp.enable(lsp_server)
+  end
+end
+)
 
 -- Treesitter
 
@@ -103,15 +125,11 @@ require("nvim-treesitter.config").setup({
 })
 
 -- Quality of life plugins. Colorthemes, keymaps etc
-
 vim.pack.add({
   { src = "https://github.com/shaunsingh/nord.nvim" },
 })
 
 vim.cmd('colorscheme nord')
-
--- New UI opt-in
-require('vim._core.ui2').enable({})
 
 -- Treat .dig files as yaml
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
@@ -121,7 +139,7 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
   end,
 })
 
--- Selectively use colorizer
+-- Colorizer shows html and other colour encodings in their colour
 vim.pack.add({
   { src = 'https://github.com/NvChad/nvim-colorizer.lua' },
 })
@@ -134,6 +152,7 @@ require 'colorizer'.setup {
   }
 }
 
+-- My own plugin for showing battery power levels in the statusline
 vim.pack.add({
   {
     src = 'https://github.com/justinhj/battery.nvim',
@@ -143,6 +162,7 @@ vim.pack.add({
 
 require('configs/battery')
 
+-- Small selection of mini plugins
 vim.pack.add({
   {
     src = 'https://github.com/nvim-mini/mini.nvim',
