@@ -5,11 +5,6 @@
       "src": "https://github.com/justinhj/battery.nvim",
       "version": "'remove-plenary'"
     },
-    "leap.nvim": {
-      "rev": "b960d5038c5c505c52e56a54490f9bbb1f0e6ef6",
-      "src": "https://codeberg.org/andyg/leap.nvim",
-      "version": "'main'"
-    },
     "mason-lspconfig.nvim": {
       "rev": "0a3b42c3e503df87aef6d6513e13148381495c3a",
       "src": "https://github.com/mason-org/mason-lspconfig.nvim"

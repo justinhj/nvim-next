@@ -137,9 +137,11 @@ vim.pack.add({
     version = 'main',
   } })
 
+require('mini.extra').setup()
 require('mini.files').setup()
 require('mini.git').setup()
 require('mini.icons').setup()
+require('mini.jump2d').setup()
 require('mini.pick').setup()
 
 require('configs/mini-clue')
@@ -195,6 +197,11 @@ vim.api.nvim_create_user_command('LSPFormat', function()
   vim.lsp.buf.format()
 end, { desc = 'Format the file using the LSP support' })
 
+-- Mini Jump2d
+map({ 'n', 'x', 'o' }, 's', function()
+  MiniJump2d.start(MiniJump2d.builtin_opts.query)
+end, { silent = true, nowait = true, desc = 'Mini Jump2d to query', noremap = true })
+
 -- Mini Pick
 map('n', '<Leader>ff', function()
   require('mini.pick').builtin.files({ tool = 'fd' })
@@ -211,9 +218,3 @@ end, { silent = true, nowait = false, desc = 'Pick grep_live' })
 map('n', '<Leader>lc', function()
   require('mini.pick').builtin.resume()
 end, { silent = true, nowait = false, desc = 'Pick resume' })
-
--- Experimental: Leap
-vim.pack.add({ { src = 'https://codeberg.org/andyg/leap.nvim', version = 'main' } })
-
-vim.keymap.set({ 'n', 'x', 'o' }, 's', '<Plug>(leap)')
-vim.keymap.set('n', 'S', '<Plug>(leap-from-window)')
