@@ -1,12 +1,13 @@
--- Justin's simple lua config
--- 0.12.x+ required
-
-require('configs.options')
+-- justinhj Neovim config
+-- 0.12.0 or later required
 
 -- New UI opt-in
 require('vim._core.ui2').enable({})
 
-local util = require('util')
+require('configs.autocmds')
+require('configs.cmds')
+require('configs.keymaps')
+require('configs.options')
 
 -- Plugins for treesitter and lsp server management (Mason)
 vim.pack.add({
@@ -16,7 +17,6 @@ vim.pack.add({
 })
 
 -- Setup LSP
-util.create_lsp_attach_autocmd()
 
 -- Add each lsp server you want to enable here
 -- Add the config to the lsp folder
@@ -46,9 +46,19 @@ vim.lsp.config('*', {
 
 -- Enable LSP completion (this connects LSP to the native menu)
 
+local function has_lsp_config(server_name)
+  local config_path = vim.fn.stdpath("config")
+  local target_path = vim.fs.joinpath(config_path, "lsp", server_name .. ".lua")
+  if vim.uv.fs_stat(target_path) then
+    return true
+  else
+    return false
+  end
+end
+
 vim.iter(lsp_servers):each(
 function(lsp_server)
-  if not util.has_lsp_config(lsp_server) then
+  if not has_lsp_config(lsp_server) then
     vim.api.nvim_echo({ { 'Warning. lsp server ' .. lsp_server .. ' has no config file in the config lsp folder.' , 'WarningMsg' } }, true, {})
     else
       vim.lsp.enable(lsp_server)
@@ -110,6 +120,4 @@ require('configs/mini-statusline')
 
 -- Key remapping, autocommands and user commands
 
-require('configs.keymaps')
-require('configs.autocmds')
-require('configs.cmds')
+
