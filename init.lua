@@ -99,14 +99,14 @@ vim.pack.add({
   } })
 
 require('mini.extra').setup()
-require('mini.files').setup()
 require('mini.git').setup()
 require('mini.icons').setup()
 require('mini.jump2d').setup()
 require('mini.pick').setup()
 
-require('configs.mini-clue')
-require('configs.mini-statusline')
+require('configs/mini-files')
+require('configs/mini-clue')
+require('configs/mini-statusline')
 
 -- Key remapping, autocommands and user commands
 
