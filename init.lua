@@ -6,8 +6,8 @@ require('vim._core.ui2').enable({})
 
 require('configs.autocmds')
 require('configs.cmds')
-require('configs.keymaps')
 require('configs.options')
+require('configs.keymaps')
 
 -- Plugins for treesitter and lsp server management (Mason)
 vim.pack.add({
