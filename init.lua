@@ -92,11 +92,13 @@ require 'colorizer'.setup {
   }
 }
 
+-- vim.opt.runtimepath:append("~/projects/battery.nvim")
+
 -- My own plugin for showing battery power levels in the statusline
 vim.pack.add({
   {
     src = 'https://github.com/justinhj/battery.nvim',
-    version = 'remove-plenary',
+    version = 'main',
   },
 })
 require('configs/battery')

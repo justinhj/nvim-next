@@ -1,9 +1,9 @@
 {
   "plugins": {
     "battery.nvim": {
-      "rev": "6b7ce9d070b3c76241b6105291f730e5b865019c",
+      "rev": "d9a5246eb6f27c136d59c64940145ba086444b3f",
       "src": "https://github.com/justinhj/battery.nvim",
-      "version": "'remove-plenary'"
+      "version": "'main'"
     },
     "mason-lspconfig.nvim": {
       "rev": "0a3b42c3e503df87aef6d6513e13148381495c3a",
