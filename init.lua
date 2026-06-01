@@ -110,10 +110,16 @@ vim.pack.add({
     version = 'main',
   } })
 
+local jump2dconfig = {
+  mappings = {
+      start_jumping = '', -- disable
+  }
+}
+
 require('mini.extra').setup()
 require('mini.git').setup()
 require('mini.icons').setup()
-require('mini.jump2d').setup()
+require('mini.jump2d').setup(jump2dconfig)
 require('mini.pick').setup()
 
 require('configs/mini-files')
