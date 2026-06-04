@@ -1,7 +1,7 @@
 {
   "plugins": {
     "battery.nvim": {
-      "rev": "3b029a40cfe53ac5c16c14c3cc5914c8bdb3634a",
+      "rev": "b93a29eb39d409fbcac6cb8b24dd9caf89579eeb",
       "src": "https://github.com/justinhj/battery.nvim",
       "version": "'main'"
     },
