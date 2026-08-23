@@ -24,6 +24,10 @@ map('n', '<Leader>ff', function()
   require('mini.pick').builtin.files({ tool = 'fd' })
 end, { silent = true, nowait = false, desc = 'Pick files' })
 
+map('n', '<Leader>fb', function()
+  require('mini.pick').registry.buffers()
+end, { silent = true, nowait = false, desc = 'Pick buffers' })
+
 map('n', '<Leader>lg', function()
   require('mini.pick').builtin.grep({ tool = 'rg' })
 end, { silent = true, nowait = false, desc = 'Pick grep' })
