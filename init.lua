@@ -121,6 +121,7 @@ require('mini.git').setup()
 require('mini.icons').setup()
 require('mini.jump2d').setup(jump2dconfig)
 require('mini.pick').setup()
+require('mini.bufremove').setup()
 
 require('configs/mini-clue')
 require('configs/mini-files')
